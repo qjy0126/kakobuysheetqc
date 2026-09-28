@@ -3,6 +3,7 @@
 .gitignore
 .assetsignore
 wrangler.toml
+worker.js
 scripts
 *.xlsx
 .~*

@@ -1,7 +1,9 @@
 name = "kakobuysheetqc"
+main = "worker.js"
 compatibility_date = "2026-09-16"
 
 [assets]
 directory = "."
+binding = "ASSETS"
 not_found_handling = "none"
 html_handling = "auto-trailing-slash"
