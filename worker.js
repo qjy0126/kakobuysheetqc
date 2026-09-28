@@ -1,7 +1,7 @@
 /**
  * Product images + sitemaps via CDN.
- * Cloudflare returns HTTP 500 for any path ending in ".xml" on this
- * Workers+Assets setup, so public sitemap URLs are extensionless.
+ * Cloudflare Workers Assets returns HTTP 500 for paths ending in ".xml"
+ * on this project, so public sitemap URLs are extensionless.
  */
 const REPO_CDN = "https://cdn.jsdelivr.net/gh/qjy0126/kakobuysheetqc@main";
 const WORKER_VER = "2026-09-28-sitemap-v5";
@@ -33,10 +33,7 @@ async function proxySitemap(publicPath) {
     if (!res.ok) {
       return new Response(`Upstream ${res.status} for ${cdnPath}`, {
         status: res.status === 404 ? 404 : 502,
-        headers: {
-          "Content-Type": "text/plain; charset=utf-8",
-          "X-Worker-Ver": WORKER_VER,
-        },
+        headers: { "Content-Type": "text/plain; charset=utf-8", "X-Worker-Ver": WORKER_VER },
       });
     }
     let text = await res.text();
@@ -48,29 +45,23 @@ async function proxySitemap(publicPath) {
         "Content-Type": "application/xml; charset=utf-8",
         "Cache-Control": "public, max-age=3600",
         "X-Worker-Ver": WORKER_VER,
-        "X-Sitemap-Cdn": cdnPath,
       },
     });
   } catch (err) {
     return new Response(`Proxy error: ${err && err.message ? err.message : String(err)}`, {
       status: 502,
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "X-Worker-Ver": WORKER_VER,
-      },
+      headers: { "Content-Type": "text/plain; charset=utf-8", "X-Worker-Ver": WORKER_VER },
     });
   }
 }
 
 async function proxyProductImage(pathname) {
   try {
-    const upstream = REPO_CDN + pathname;
-    const res = await fetch(upstream);
+    const res = await fetch(REPO_CDN + pathname);
     if (!res.ok) {
       return new Response("Not found", { status: res.status === 404 ? 404 : 502 });
     }
-    const body = await res.arrayBuffer();
-    return new Response(body, {
+    return new Response(await res.arrayBuffer(), {
       status: 200,
       headers: {
         "Content-Type": "image/webp",
@@ -89,12 +80,6 @@ async function proxyProductImage(pathname) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-
-    if (url.pathname === "/__worker-ping") {
-      return new Response(`ok ${WORKER_VER}`, {
-        headers: { "Content-Type": "text/plain; charset=utf-8", "X-Worker-Ver": WORKER_VER },
-      });
-    }
 
     if (url.pathname.startsWith("/img/products/")) {
       return proxyProductImage(url.pathname);
