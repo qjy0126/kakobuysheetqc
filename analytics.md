@@ -65,4 +65,26 @@
 | `price` | 价格 |
 | `quantity` | `1` |
 
+## pwa_install_click / pwa_install / pwa_install_guide
+
+首页公告条「Add to Home Screen」：
+
+| 事件 | 何时 |
+| --- | --- |
+| `pwa_install_click` | 点按钮 |
+| `pwa_install` | 用户接受安装（系统弹窗或 `appinstalled`） |
+| `pwa_install_dismiss` | 系统弹窗被取消 |
+| `pwa_install_guide` | 无系统弹窗时，展示 iOS / 浏览器手动安装提示 |
+
+## outbound_click / click
+
+点站外链接（Google Sheet、Discord、任意外链）会记 `outbound_click`（同时记一条 `click`）。Kakobuy 购买/注册还会额外记上面的 `buy_kakobuy` / `signup_kakobuy`。
+
+| 参数 | 含义 |
+| --- | --- |
+| `link_url` | 目标 URL |
+| `link_domain` | 域名 |
+| `event_label` | 链接文案 |
+| `page_path` | 当前页 |
+
 实现：`js/data.js` 的 `KF.track` / `KF.gaItem`，调用在 `js/ui.js`、`js/pages.js`。

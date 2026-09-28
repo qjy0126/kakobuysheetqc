@@ -306,21 +306,43 @@
       deferredPrompt = null;
       btn.classList.add("is-hidden");
       toast("Added to Home Screen");
+      KF.track("pwa_install", {
+        method: "accepted",
+        page_path: location.pathname,
+      });
     });
 
     btn.addEventListener("click", async () => {
+      KF.track("pwa_install_click", {
+        page_path: location.pathname,
+        has_prompt: Boolean(deferredPrompt),
+        platform: isIos() ? "ios" : "other",
+      });
       if (deferredPrompt) {
         deferredPrompt.prompt();
         const choice = await deferredPrompt.userChoice.catch(() => null);
         deferredPrompt = null;
-        if (choice && choice.outcome === "accepted") btn.classList.add("is-hidden");
+        if (choice && choice.outcome === "accepted") {
+          btn.classList.add("is-hidden");
+          KF.track("pwa_install", {
+            method: "prompt",
+            page_path: location.pathname,
+          });
+        } else {
+          KF.track("pwa_install_dismiss", {
+            page_path: location.pathname,
+            outcome: choice ? choice.outcome : "unknown",
+          });
+        }
         return;
       }
       if (isIos()) {
         showPwaTip('On iPhone/iPad: tap the <strong>Share</strong> button, then <strong>Add to Home Screen</strong>.');
+        KF.track("pwa_install_guide", { platform: "ios", page_path: location.pathname });
         return;
       }
       showPwaTip('Use your browser menu → <strong>Install app</strong> / <strong>Add to Home Screen</strong>.');
+      KF.track("pwa_install_guide", { platform: "other", page_path: location.pathname });
     });
   }
 
