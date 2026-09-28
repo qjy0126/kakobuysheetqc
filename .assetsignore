@@ -1,5 +1,7 @@
 .git
 **/.git/**
+.wrangler
+.wrangler/**
 .gitignore
 .assetsignore
 wrangler.toml
@@ -14,3 +16,9 @@ README.md
 # Product webps are ~430MB — keep local/GitHub, skip Cloudflare Workers assets upload
 img/products
 img/products/**
+# XML sitemaps 500 when served via Assets; Worker proxies them from CDN
+sitemap.xml
+sitemap-index.xml
+sitemap-pages.xml
+sitemaps
+sitemaps/**
