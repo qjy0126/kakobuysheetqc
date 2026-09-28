@@ -1,0 +1,1 @@
+../../kakobuyqcsheets/js/slugs.js

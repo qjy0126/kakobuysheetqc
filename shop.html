@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, follow" />
+  <title>Redirecting…</title>
+  <link rel="canonical" href="https://kakobuysheetqc.com/finds/" />
+  <script>
+    (function () {
+      var cats = {"shoes":1,"t-shirts":1,"hoodies":1,"jackets":1,"pants":1,"sets":1,"jersey":1,"underwear":1,"headwear":1,"glasses":1,"watches":1,"perfume":1,"accessories":1,"bricks":1,"other":1};
+      var p = new URLSearchParams(location.search);
+      var cat = p.get("cat") || "";
+      p.delete("cat");
+      var dest = cats[cat] ? "/" + cat + "/" : "/finds/";
+      var qs = p.toString();
+      location.replace(dest + (qs ? "?" + qs : ""));
+    })();
+  </script>
+</head>
+<body>
+  <p>This catalog moved. <a href="/finds/">Continue to all finds</a>.</p>
+</body>
+</html>
