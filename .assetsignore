@@ -10,3 +10,6 @@ scripts
 *.pyc
 __pycache__
 README.md
+# Product webps are ~430MB — keep local/GitHub, skip Cloudflare Workers assets upload
+img/products
+img/products/**
