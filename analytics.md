@@ -1,6 +1,6 @@
 # Analytics 事件
 
-站点用 Google Analytics 4（gtag），测量 ID：`G-48MV974LBV`。Firebase 若绑了同一条 Analytics，看到的是同一份数据。
+站点用 Google Analytics 4（gtag），测量 ID：`G-8199QNWH6R`（Firebase 项目 `kakobuywebsite2`）。Firebase 若绑了同一条 Analytics，看到的是同一份数据。
 
 自动会记：打开页面（`page_view`）。下面是另外打的自定义事件。
 
