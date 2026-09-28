@@ -47,4 +47,4 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
-Sitemap: https://kakobuysheetqc.com/sitemap-index
+Sitemap: https://kakobuysheetqc.com/sitemap-index.xml
